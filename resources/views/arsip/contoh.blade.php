@@ -6,4 +6,7 @@
     <p>ini data surat</p>
     <p>{{ $nama }}</p>
     <p>{{ $nomor }}</p>
+    <p>{{ $tanggal }}</p>
+    <p>{{ $kategori }}</p>
+    <p>{{ $nomor }}</p>
 </x-navbar>

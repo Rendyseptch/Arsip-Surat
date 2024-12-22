@@ -9,4 +9,11 @@ class Arsip extends Model
 {
     /** @use HasFactory<\Database\Factories\ArsipFactory> */
     use HasFactory;
+    protected $fillable = [
+    'nama',
+    'nomor',
+    'tanggal',
+    'kategori',
+     
+    ];
 }
