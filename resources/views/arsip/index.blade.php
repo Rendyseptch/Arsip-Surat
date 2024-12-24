@@ -2,7 +2,14 @@
     <x-layout>
         <x-slot:title>{{ $title }}</x-slot:title>
     </x-layout>
-    <a class="bg-blue-600 text-white px-2 py-2 mt-8 rounded-lg m-lg-2" href="{{ route('create-arsip') }}">Tambah</a>
+    @if (Auth::check() && Auth::user()->role === 1)
+        <a class="bg-blue-600 text-white px-2 py-2 mt-8 rounded-lg m-lg-2" href="{{ route('create-arsip') }}">Tambah</a>
+    @endif
+    <div class="mt-5">
+        @if (session('success'))
+            @include('alerts.success')
+        @endif
+    </div>
     <table class="min-w-full divide-y divide-gray-200 mt-8  ">
         <thead>
             <tr>
@@ -39,20 +46,22 @@
                         <link rel="stylesheet"
                             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=format_list_bulleted" />
 
-                        <a href="/edit-arsip/{{ $arsip->id }}"
-                            class="px-4 py-2 mx-auto my-auto font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out"><span
-                                class="material-icons ">
-                                edit
-                            </span></a>
-                        <form action="{{ route('destroy.arsip') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $arsip->id }}">
-                            <button type="submit"
-                                class="px-4 mt-4 py-2 mx-auto my-auto font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
-                                <span class="material-icons">
-                                    delete
-                                </span></button>
-                        </form>
+                        @if (Auth::check() && Auth::user()->role === 1)
+                            <a href="/edit-arsip/{{ $arsip->id }}"
+                                class="px-4 py-2 mx-auto my-auto font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out"><span
+                                    class="material-icons ">
+                                    edit
+                                </span></a>
+                            <form action="{{ route('destroy.arsip') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $arsip->id }}">
+                                <button type="submit"
+                                    class="px-4 mt-4 py-2 mx-auto my-auto font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
+                                    <span class="material-icons">
+                                        delete
+                                    </span></button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach

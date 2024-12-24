@@ -55,9 +55,15 @@
 
     {{-- End Detail Dokumen  --}}
     <!-- This is an example component -->
-    <h1>File PDF</h1>
+    <div class="text-end">
+
+        <h1 class="my-2 mb-4">View This Dokumen</h1>
+        <a target="_blank" href="{{ asset('dokumen-surat/' . $arsip->dokumen) }}"
+            class="bg-green-400 p-3 my-2 text-white font-bold rounded-md">Open the pdf!</a>
+    </div>
+
     {{-- Detail Pegawai  --}}
-    <div class="bg-white shadow-md rounded-md overflow-hidden max-w-full mx-auto mt-16">
+    <div class="bg-white shadow-md rounded-md overflow-hidden max-w-full mx-auto mt-5">
         <div class="bg-gray-100 py-2 px-4">
             <h2 class="text-xl font-semibold text-gray-800">List Pegawai</h2>
         </div>

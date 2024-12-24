@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\HelloController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PengalamanController;
+use App\Http\Controllers\UserManagementController;
 
 Route::get('/', function () {
     return view('login');
@@ -17,6 +19,11 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard', ['title' => 'Home Page', 'name' => 'Rendy Septian']);
     });
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    // error page
+    Route::get('/error-page', function () {
+        return view('erorr-page');
+    })->name('error-page');
 });
 
 
@@ -32,9 +39,27 @@ Route::post('/delete-arsip', [ArsipController::class, 'destroy'])->name('destroy
 // end route arsip
 
 
-Route::get('/kategori', function () {
-    return view('kategori', ['title' => 'Kategori Dokumen']);
+Route::group(['middleware' => ['isAdmin'], 'prefix' => 'jabatan'], function () {
+    // Admin ROLE
+    Route::get('/', [JabatanController::class, 'index']);
+    Route::post('/create-jabatan', [JabatanController::class, 'createJabatan'])->name('create-jabatan');
+    Route::post('/delete-jabatan', [JabatanController::class, 'deleteJabatan'])->name('destroy.jabatan');
+    Route::post('/create-pangkat', [JabatanController::class, 'createPangkat'])->name('create-pangkat');
+    Route::post('/delete-pangkat', [JabatanController::class, 'deletePangkat'])->name('destroy.pangkat');
 });
+
+Route::group(['middleware' => ['isAdmin'], 'prefix' => 'user-managements'], function () {
+    // Admin ROLE
+    Route::get('/', [UserManagementController::class, 'index']);
+    Route::get('/detail/{id}', [UserManagementController::class, 'detail'])->name('detail.pegawai');
+    Route::get('/create', [UserManagementController::class, 'create'])->name('create.pegawai');
+    Route::post('/store', [UserManagementController::class, 'store'])->name('store.pegawai');
+    Route::get('/edit/{id}', [UserManagementController::class, 'edit'])->name('edit.pegawai');
+    Route::post('/update', [UserManagementController::class, 'update'])->name('update.pegawai');
+    Route::post('/delete', [UserManagementController::class, 'destroy'])->name('destroy.pegawai');
+});
+
+
 // kurang clean dan kurang mengikuti best patern
 // Route::get('/hello', function(){
 //     return view('hello');

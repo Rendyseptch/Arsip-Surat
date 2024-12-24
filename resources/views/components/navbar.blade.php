@@ -6,6 +6,7 @@
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
         rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    @yield('link')
     <style>
         :root {
             --header-height: 4rem;
@@ -90,40 +91,22 @@
 
                 <x-nav-link href="/dashboard" :active="request()->is('dashboard')"><span class="material-icons mr-2">dashboard </span>
                     Dashboard</x-nav-link>
+                {{-- akses untuk admin saja  --}}
+                @if (Auth::check() && Auth::user()->role === 1)
+                    <x-nav-link href="/jabatan" :active="request()->is('jabatan')"><span class="material-icons mr-2">category</span>
+                        Jabatan & Pangkat</x-nav-link>
+                    <x-nav-link href="/user-managements" :active="request()->is('user-managements')"><span
+                            class="material-icons mr-2">category</span>
+                        Users Management</x-nav-link>
+                @endif
+                {{-- end akses untuk admin saja  --}}
                 <x-nav-link href="/arsip" :active="request()->is('arsip')"><span class="material-icons mr-2">receipt</span>
                     Arsip Surat</x-nav-link>
-                <x-nav-link href="/kategori" :active="request()->is('kategori')"><span class="material-icons mr-2">category</span>
-                    Kategori Surat</x-nav-link>
 
-
-                {{-- <a href="/hello"
-                    class="{{ request()->is('hello') ? 'flex items-center py-2 pl-3 bg-blue-800 text-white rounded-lg transition-all duration-300' : 'flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1' }}">
-
-                    Arsip Surat
-                    <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
-                </a>
-                <a href="/pengalaman"
-                    class="{{ request()->is('pengalaman') ? 'flex items-center py-2 pl-3 bg-blue-800 text-white rounded-lg transition-all duration-300' : 'flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1' }}">
-                    <span class="material-icons-outlined mr-2">file_copy</span>
-                    Kategori Surat
-                    <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
-                </a>
-            </div> --}}
 
                 <div
                     class="bg-white rounded-xl shadow-lg p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <a href="#"
-                        class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
-                        <span class="material-icons-outlined mr-2">face</span>
-                        Profile
-                        <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
-                    </a>
-                    <a href="#"
-                        class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
-                        <span class="material-icons-outlined mr-2">settings</span>
-                        Settings
-                        <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
-                    </a>
+
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button type="submit"
@@ -144,6 +127,7 @@
     </div>
 
 
+    @yield('script')
     <script>
         // Mobile menu functionality
         const mobileMenuButton = document.querySelector('.mobile-menu-button');

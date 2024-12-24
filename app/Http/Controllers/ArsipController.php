@@ -8,13 +8,22 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ArsipController extends Controller
 {
     //
     function index()
     {
-        $arsips = Surat::all();
+        $user = Auth::user();
+        $arsips = [];
+        if ($user->role) {
+            $arsips = Surat::all();
+        } else {
+            // $arsips = Surat::where('');
+            dd('bukan admin');
+            // berdasarkan user_id yang bukan admin
+        }
         // dd($arsips);
         return view(
             'arsip.index',
@@ -62,12 +71,12 @@ class ArsipController extends Controller
             $validate['dokumen'] = $fileName;
         }
         Surat::create($validate);
-        return redirect('/arsip');
+        return redirect('/arsip')->with("success", "Surat Berhasil ditambahkan!");
     }
 
     public function edit($id)
     {
-        $arsip = Arsip::findOrFail($id);
+        $arsip = Surat::findOrFail($id);
         return view('arsip.edit', [
             'arsip' => $arsip
         ]);
@@ -79,19 +88,39 @@ class ArsipController extends Controller
             'nama' => 'required',
             'nomor' => 'required',
             'tanggal' => 'required',
-            'kategori' => 'required',
+            'alamat' => 'required',
+            'waktu' => 'required',
+            'keterangan' => 'nullable',
         ]);
+        if ($request->file('dokumen')) {
+            // menghapus data sebelumnya
+            if ($request->oldDokumen) {
+                $filePath = public_path('dokumen-surat/' . $request->oldDokumen);
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Menghapus file
+                }
+            }
+            $image = $request->dokumen;
+            $ext   = $image->getClientOriginalExtension();
+            $randomString = Str::random(5);
+            $imageName = $request->nama . '-' . $randomString . '.' . $ext;
+            $image->move(public_path('dokumen-surat'), $imageName);
+            $validate['dokumen'] = $imageName;
+        }
         // mencari data berdasarkan id
-        $arsip = Arsip::findOrFail($request->id);
+        $arsip = Surat::findOrFail($request->id);
         $arsip->update($validate);
-        return redirect('/arsip');
+        return redirect('/arsip')->with("success", "Surat Berhasil diUpdate!");
     }
     public function destroy(Request $request)
     {
 
-        $arsip = Arsip::findOrFail($request->id);
+        $arsip = Surat::findOrFail($request->id);
+        $filePath = public_path('dokumen-surat/' . $arsip->dokumen);
+        if (file_exists($filePath)) {
+            unlink($filePath); // Menghapus file
+        }
         $arsip->delete();
-
-        return redirect('/arsip');
+        return redirect('/arsip')->with("success", "Surat Berhasil dihapus!");
     }
 }
