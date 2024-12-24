@@ -22,10 +22,11 @@ class User extends Authenticatable
         'password',
         'role',
     ];
-    public function employee(){
-        return $this->hasMany(Employee::class);
-    }
 
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'user_id', 'id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

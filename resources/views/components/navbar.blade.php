@@ -68,7 +68,7 @@
                 <span class="material-icons-outlined text-2xl">menu</span>
             </button>
             <div class="text-xl font-bold text-blue-900">
-                Admin<span class="text-indigo-800">Panel</span>
+                Arsip<span class="text-indigo-800 mx-1">Dinas Luar</span>KPU
             </div>
             <div class="flex items-center space-x-2">
                 <span
@@ -87,18 +87,18 @@
             class="sidebar fixed lg:static w-[240px] bg-indigo-50 h-[calc(100vh-4rem)] lg:h-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-45 overflow-y-auto p-4">
             <div
                 class="bg-white rounded-xl shadow-lg mb-6 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-              
-                <x-nav-link href="/" :active="request()->is('/')"><span class="material-icons mr-2">dashboard </span>
+
+                <x-nav-link href="/dashboard" :active="request()->is('dashboard')"><span class="material-icons mr-2">dashboard </span>
                     Dashboard</x-nav-link>
                 <x-nav-link href="/arsip" :active="request()->is('arsip')"><span class="material-icons mr-2">receipt</span>
                     Arsip Surat</x-nav-link>
                 <x-nav-link href="/kategori" :active="request()->is('kategori')"><span class="material-icons mr-2">category</span>
                     Kategori Surat</x-nav-link>
-                
+
 
                 {{-- <a href="/hello"
                     class="{{ request()->is('hello') ? 'flex items-center py-2 pl-3 bg-blue-800 text-white rounded-lg transition-all duration-300' : 'flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1' }}">
-                    
+
                     Arsip Surat
                     <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
                 </a>
@@ -110,27 +110,30 @@
                 </a>
             </div> --}}
 
-            <div
-                class="bg-white rounded-xl shadow-lg p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                <a href="#"
-                    class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
-                    <span class="material-icons-outlined mr-2">face</span>
-                    Profile
-                    <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
-                </a>
-                <a href="#"
-                    class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
-                    <span class="material-icons-outlined mr-2">settings</span>
-                    Settings
-                    <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
-                </a>
-                <a href="#"
-                    class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
-                    <span class="material-icons-outlined mr-2">power_settings_new</span>
-                    Log out
-                    <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
-                </a>
-            </div>
+                <div
+                    class="bg-white rounded-xl shadow-lg p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <a href="#"
+                        class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
+                        <span class="material-icons-outlined mr-2">face</span>
+                        Profile
+                        <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
+                    </a>
+                    <a href="#"
+                        class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
+                        <span class="material-icons-outlined mr-2">settings</span>
+                        Settings
+                        <span class="material-icons-outlined ml-auto">keyboard_arrow_right</span>
+                    </a>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1">
+                            <span class="material-icons-outlined mr-2">power_settings_new</span>
+                            Log out
+
+                        </button>
+                    </form>
+                </div>
         </aside>
 
         <main class="flex-1 p-4">
