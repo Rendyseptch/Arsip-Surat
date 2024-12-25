@@ -27,6 +27,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Pegawai::class, 'user_id', 'id');
     }
+    public function surats()
+    {
+        return $this->belongsToMany(Surat::class, 'surat_user', 'user_id', 'surat_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

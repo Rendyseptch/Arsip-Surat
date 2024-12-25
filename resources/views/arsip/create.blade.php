@@ -2,6 +2,7 @@
     <x-layout class="mb-6">
         <x-slot:title>{{ $title ?? 'Default' }} </x-slot:title>
     </x-layout>
+
     <form action="{{ route('store-arsip') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class=" relative flex flex-col space-y-4 m-6">
@@ -11,12 +12,22 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Nama" required />
             </div>
-            <div class="mb-6">
+            {{-- <div class="mb-6">
                 <label for="nomor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor
                 </label>
                 <input type="text" id="nomor" name="nomor"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Nomor" required />
+            </div>
+            <div class="mb-6">
+                <label for="jenis" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Dinas
+                </label>
+                <select id="jenis" name="jenis"
+                    class="mb-2 text-dark bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Jenis Dinas</option>
+                    <option value="dinas luar">Dinas Luar</option>
+                    <option value="dinas dalam">Dinas Dalam</option>
+                </select>
             </div>
             <div class="mb-6">
                 <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
@@ -52,7 +63,7 @@
                 <input type="text" id="keterangan" name="keterangan"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="keterangan" />
-            </div>
+            </div> --}}
             <button type="submit" class="bg-blue-600 p-2 rounded-md text-white">submit</button>
     </form>
     </div>

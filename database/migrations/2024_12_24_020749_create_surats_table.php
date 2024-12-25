@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('nomor');
+            $table->string('jenis');
             $table->date('tanggal');
             $table->time('waktu');
             $table->string('alamat');

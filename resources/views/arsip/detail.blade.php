@@ -55,28 +55,32 @@
 
     {{-- End Detail Dokumen  --}}
     <!-- This is an example component -->
+
     <div class="text-end">
 
         <h1 class="my-2 mb-4">View This Dokumen</h1>
         <a target="_blank" href="{{ asset('dokumen-surat/' . $arsip->dokumen) }}"
             class="bg-green-400 p-3 my-2 text-white font-bold rounded-md">Open the pdf!</a>
     </div>
-
-    {{-- Detail Pegawai  --}}
-    <div class="bg-white shadow-md rounded-md overflow-hidden max-w-full mx-auto mt-5">
-        <div class="bg-gray-100 py-2 px-4">
-            <h2 class="text-xl font-semibold text-gray-800">List Pegawai</h2>
+    @if (Auth::check() && Auth::user()->role === 1)
+        {{-- Detail Pegawai  --}}
+        <div class="bg-white shadow-md rounded-md overflow-hidden max-w-full mx-auto mt-5">
+            <div class="bg-gray-100 py-2 px-4">
+                <h2 class="text-xl font-semibold text-gray-800">List Pegawai</h2>
+            </div>
+            <ul class="divide-y divide-gray-200">
+                @foreach ($arsip->users as $user)
+                    <li class="flex items-center py-4 px-6">
+                        <span class="text-gray-700 text-lg font-medium mr-4">1.</span>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-medium text-gray-800">{{ $user->pegawai->nama }}</h3>
+                            <p class="text-gray-600 text-base">{{ $user->pegawai->nip }}</p>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
         </div>
-        <ul class="divide-y divide-gray-200">
-            <li class="flex items-center py-4 px-6">
-                <span class="text-gray-700 text-lg font-medium mr-4">1.</span>
-                <div class="flex-1">
-                    <h3 class="text-lg font-medium text-gray-800">Emily Jones</h3>
-                    <p class="text-gray-600 text-base">1234 points</p>
-                </div>
-            </li>
-        </ul>
-    </div>
+    @endif
     {{-- End Detail Pegawai  --}}
 </x-navbar>
 `

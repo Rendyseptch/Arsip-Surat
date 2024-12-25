@@ -35,6 +35,7 @@ Route::get('/create-arsip', [ArsipController::class, 'create'])->name('create-ar
 Route::post('/store-arsip', [ArsipController::class, 'store'])->name('store-arsip');
 Route::get('/edit-arsip/{id}', [ArsipController::class, 'edit'])->name('edit-arsip');
 Route::post('/update-arsip', [ArsipController::class, 'update'])->name('update-arsip');
+Route::post('/attach', [ArsipController::class, 'attach'])->name('attach');
 Route::post('/delete-arsip', [ArsipController::class, 'destroy'])->name('destroy.arsip');
 // end route arsip
 
