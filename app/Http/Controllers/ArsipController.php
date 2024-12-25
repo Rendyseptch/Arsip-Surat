@@ -53,35 +53,25 @@ class ArsipController extends Controller
     }
     function store(Request $request)
     {
-        // $validate = $request->validate([
-        //     'nama' => 'required',
-        //     'nomor' => 'required',
-        //     'jenis' => 'required',
-        //     'tanggal' => 'required',
-        //     'alamat' => 'required',
-        //     'waktu' => 'required',
-        //     'dokumen' => 'required',
-        //     'keterangan' => 'nullable',
+        $validate = $request->validate([
+            'nama' => 'required',
+            'nomor' => 'required',
+            'jenis' => 'required',
+            'tanggal' => 'required',
+            'alamat' => 'required',
+            'waktu' => 'required',
+            'dokumen' => 'required',
+            'keterangan' => 'nullable',
 
-        // ]);
-        // if ($request->file('dokumen')) {
-        //     $file = $request->dokumen;
-        //     $ext   = $file->getClientOriginalExtension();
-        //     $randomString = Str::random(5);
-        //     $fileName = $request->nama . '-' . $randomString . '.' . $ext;
-        //     $file->move(public_path('dokumen-surat'), $fileName);
-        //     $validate['dokumen'] = $fileName;
-        // }
-        $validate = [
-            'nama' => ' Surat Kunjungan kerja Surabaya',
-            'nomor' => ' SDL0012731',
-            'jenis' => ' dinas luar',
-            'tanggal' => now()->format('Y-m-d'),
-            'waktu' => now()->format('H:i:s'),
-            'alamat' => 'Kota Malang',
-            'dokumen' => 'surat_kota_malang',
-            'keterangan' => 'keterangan semua',
-        ];
+        ]);
+        if ($request->file('dokumen')) {
+            $file = $request->dokumen;
+            $ext   = $file->getClientOriginalExtension();
+            $randomString = Str::random(5);
+            $fileName = $request->nama . '-' . $randomString . '.' . $ext;
+            $file->move(public_path('dokumen-surat'), $fileName);
+            $validate['dokumen'] = $fileName;
+        }
         $surat = Surat::create($validate);
         $surat->refresh();
         return redirect('/edit-arsip/' . $surat->id)->with("success", "Surat Berhasil ditambahkan! Silahkan pilih pegawai");
