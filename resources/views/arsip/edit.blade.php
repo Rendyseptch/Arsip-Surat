@@ -95,16 +95,29 @@
                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
                     </td> --}}
                     <td class=" flex flex-col-3 gap-3 px-6 py-4 whitespace-nowrap">
-                        <form action="{{ route('attach') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="user" value="{{ $pegawai->id }}">
-                            <input type="hidden" name="surat" value="{{ $arsip->id }}">
-                            <button type="submit"
-                                class="px-4 mt-4 py-2 mx-auto my-auto font-medium text-white bg-green-600 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
-                                <span class="material-icons">
-                                    add
-                                </span></button>
-                        </form>
+                        @if ($pegawai->surats->contains($arsip->id))
+                            <form action="{{ route('toggle') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="user" value="{{ $pegawai->id }}">
+                                <input type="hidden" name="surat" value="{{ $arsip->id }}">
+                                <button type="submit"
+                                    class="px-4 mt-4 py-2 mx-auto my-auto font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
+                                    <span class="material-icons">
+                                        delete
+                                    </span></button>
+                            </form>
+                        @else
+                            <form action="{{ route('toggle') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="user" value="{{ $pegawai->id }}">
+                                <input type="hidden" name="surat" value="{{ $arsip->id }}">
+                                <button type="submit"
+                                    class="px-4 mt-4 py-2 mx-auto my-auto font-medium text-white bg-green-600 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
+                                    <span class="material-icons">
+                                        add
+                                    </span></button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach

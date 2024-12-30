@@ -29,14 +29,16 @@ Route::middleware(['auth'])->group(function () {
 
 
 // start route arsip
-Route::get('/arsip', [ArsipController::class, 'index'])->name('list-arsip');
-Route::get('/arsip/{id}', [ArsipController::class, 'detail'])->name('detail-arsip');
-Route::get('/create-arsip', [ArsipController::class, 'create'])->name('create-arsip');
-Route::post('/store-arsip', [ArsipController::class, 'store'])->name('store-arsip');
-Route::get('/edit-arsip/{id}', [ArsipController::class, 'edit'])->name('edit-arsip');
-Route::post('/update-arsip', [ArsipController::class, 'update'])->name('update-arsip');
-Route::post('/attach', [ArsipController::class, 'attach'])->name('attach');
-Route::post('/delete-arsip', [ArsipController::class, 'destroy'])->name('destroy.arsip');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/arsip', [ArsipController::class, 'index'])->name('list-arsip');
+    Route::get('/arsip/{id}', [ArsipController::class, 'detail'])->name('detail-arsip');
+    Route::get('/create-arsip', [ArsipController::class, 'create'])->name('create-arsip');
+    Route::post('/store-arsip', [ArsipController::class, 'store'])->name('store-arsip');
+    Route::get('/edit-arsip/{id}', [ArsipController::class, 'edit'])->name('edit-arsip');
+    Route::post('/update-arsip', [ArsipController::class, 'update'])->name('update-arsip');
+    Route::post('/attach', [ArsipController::class, 'toggle'])->name('toggle');
+    Route::post('/delete-arsip', [ArsipController::class, 'destroy'])->name('destroy.arsip');
+});
 // end route arsip
 
 

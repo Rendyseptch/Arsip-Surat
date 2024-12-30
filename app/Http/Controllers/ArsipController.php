@@ -13,16 +13,31 @@ use Illuminate\Support\Facades\Auth;
 class ArsipController extends Controller
 {
     //
-    function index()
+    function index(Request $request)
     {
+        $jenis = $request->input('jenis');
         $user = Auth::user();
         $arsips = [];
         if ($user->role) {
-            $arsips = Surat::with('users')->get();
+            if ($jenis) {
+                $arsips = Surat::with('users')->where('jenis', $jenis)->get();
+            } else {
+                $arsips = Surat::with('users')->get();
+            }
         } else {
-            $arsips = Surat::with('users')->whereHas('users', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })->get();
+            if ($jenis) {
+                $arsips = Surat::with('users')
+                    ->whereHas('users', function ($query) use ($user) {
+                        $query->where('user_id', $user->id);
+                    })
+                    ->where('jenis', $jenis) // Menambahkan kondisi untuk kolom 'jenis'
+                    ->get();
+            } else {
+
+                $arsips = Surat::with('users')->whereHas('users', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })->get();
+            }
             // berdasarkan user_id yang bukan admin
         }
         // dd($arsips);
@@ -86,12 +101,18 @@ class ArsipController extends Controller
             'pegawais' => $pegawai
         ]);
     }
-    public function attach(Request $request)
+    public function toggle(Request $request)
     {
         $surat = Surat::where('id', $request->surat)->first();
-        $surat->users()->attach($request->user);
+        $surat->users()->toggle($request->user);
         return redirect('/edit-arsip/' . $request->surat)->with("success", "Surat Berhasil Menambahkan pegawai");
     }
+    // public function dettach(Request $request)
+    // {
+    //     $surat = Surat::where('id', $request->surat)->first();
+    //     $surat->users()->detach($request->user);
+    //     return redirect('/edit-arsip/' . $request->surat)->with("success", "Surat Berhasil Delete pegawai");
+    // }
 
     public function update(Request $request)
     {
