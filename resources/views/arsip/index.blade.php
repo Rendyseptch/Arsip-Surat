@@ -1,4 +1,7 @@
 <x-navbar>
+    @section('link')
+        <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    @endsection
     <x-layout>
         <x-slot:title>{{ $title }}</x-slot:title>
     </x-layout>
