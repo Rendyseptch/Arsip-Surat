@@ -36,7 +36,7 @@
     <x-layout>
         <x-slot:title>{{ $title }}</x-slot:title>
     </x-layout>
-    <a href="{{ route('create-arsip') }}">Tambah</a>
+    <a class="my-6" href="{{ route('create-arsip') }}">Tambah</a>
     <table class="min-w-full divide-y divide-gray-200 mt-8  ">
         <thead>
             <tr>
